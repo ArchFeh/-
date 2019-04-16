@@ -5,23 +5,17 @@
 MyString::MyString()
 {
 	this->str = new char[1];
-	if(strlen(this->str)==0)
-		cout<<"create memory failed"<<endl;
 }
 
 MyString::MyString(const char *str)
 {
 	this->str=new char[strlen(str)+1];
-	if(strlen(this->str)==0)
-		cout<<"create memory failed"<<endl;
 	strcpy(this->str,str);
 }
 
 MyString::MyString(const MyString &mystring)
 {
 	this->str = new char[strlen(str)+1];
-	if(strlen(this->str)==0)
-		cout<<"create memory failed"<<endl;
 	strcpy(this->str,mystring.str);
 }
 
@@ -38,8 +32,6 @@ MyString &MyString::operator=(const MyString &mstring)
         if(strlen(str)!=0)
 		cout<<"free memory failed"<<endl;
 	str = new char[strlen(mstring.str)+1];
-	if(strlen(str)==0)
-		cout<<"create memory failed"<<endl;
 	strcpy(str,mstring.str);
 	return *this;
 }
@@ -55,8 +47,6 @@ MyString &MyString::operator=(const char *str1)
 		if(strlen(str)!=0)
 		cout<<"free memory failed"<<endl;
 		str=new char[strlen(str)+1];
-		if(strlen(str)==0)
-		cout<<"create memory failed"<<endl;
 		strcpy(str,str1);
 	}
 	return *this;
@@ -71,8 +61,6 @@ MyString const MyString::operator+(const MyString &mstring)const
 	else
 	{
 		newStr.str = new char[strlen(str)+strlen(mstring.str)+1];
-		if(strlen(newStr.str)==0)
-		cout<<"create memory failed"<<endl;
 		strcpy(newStr.str,str);
 		strcat(newStr.str,mstring.str);
 	}
@@ -81,11 +69,12 @@ MyString const MyString::operator+(const MyString &mstring)const
 
 MyString MyString::operator*(int raz)const
 {
-	assert(raz);
+	try{
+            if(raz<=0)
+                throw "Not nonnegative number."
+        }
 	MyString newStr;
 	newStr.str = new char[strlen(str)*raz+1];
-	if(strlen(newStr.str)==0)
-		cout<<"create memory failed"<<endl;
 	for(int i=0;i<raz;i++)
 		strcat(newStr.str,str);
 	return newStr;
@@ -272,9 +261,11 @@ bool operator==(const char *str,const MyString &mstring)
 
 char &MyString::operator[](int position)
 {
-	if(position>0 && position < strlen(str))
+	try{
+           if(position<0 || position > strlen(str))
+            throw "out of range."
+         }
 	return str[position];
-	else cout<<"out edge"<<endl;
 }
 
 const char &MyString::operator[](int position)const
