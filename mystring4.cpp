@@ -7,30 +7,20 @@
 
 class my_logic_error:public std::exception
 {
-	public:
-		const char* what(){
-			return "nonnegativce number";
-		}
-};
+    public:
+        const char* what(){
+            return "Exception: Not nonnegative number.";
+        }
+}ml;
 
 class my_out_of_range:public std::exception
 {
-	public:
-		const char* what()
-		{
-			return "out of range";
-		}
-};
-
-class my_bad_alloc:public std::exception
-{
-	public:
-		const char* what()
-		{
-			return "new failed";
-		}
-};
-
+    public:
+        const char* what()
+        {
+            return "Exception: out of range.";
+        }
+}mo;
 
 
 MyString::MyString()
@@ -98,12 +88,14 @@ MyString MyString::operator*(int raz)const
 {
     try{
             if(raz<0)
-                throw my_logic_error();
+                throw ml;
         }
     catch(my_logic_error &e)
     {
-        cout<<e.what()<<endl<<"Please input number >0:";
-        cin>>raz;
+        do {
+           cout<<e.what()<<endl<<"Please input number >0:";
+           cin>>raz;
+        } while (raz < 0);
     }
     MyString newStr;
     newStr.str = new char[strlen(str)*raz+1];
@@ -145,7 +137,7 @@ bool MyString::operator<(const MyString &mstring)
     }
     else
     {
-	    return false;
+        return false;
     }
 }
 
@@ -238,13 +230,15 @@ bool operator==(const char *str,const MyString &mstring)
 char &MyString::operator[](int position)
 {
     try{
-           if(position<0 || position > strlen(str))
-            throw my_out_of_range();
+           if(position<0 || position > (strlen(str)-1))
+            throw mo;
          }
              catch(my_out_of_range& e)
     {
-        cout<<e.what()<<endl<<"Please input number in range:";
-        cin>>position;
+        do {
+           cout<<e.what()<<endl<<"Please input number in range:(0-"<<strlen(str)-1<<")"<<endl;
+           cin>>position;
+        } while (position < 0 || (position >strlen(str)-1));
     }
     return str[position];
 }
@@ -252,14 +246,15 @@ char &MyString::operator[](int position)
 const char &MyString::operator[](int position)const 
 {   
     try{
-           if(position<0 || position > strlen(str))
-            throw my_out_of_range();
+           if(position<0 || position > (strlen(str)-1))
+            throw mo;
          }
              catch(my_out_of_range& e)
     {
-        cout<<e.what()<<endl<<"Please input number in range:";
-        cin>>position;
-        
+         do {
+           cout<<e.what()<<endl<<"Please input number in range:(0-"<<strlen(str)-1<<")"<<endl;
+           cin>>position;
+        } while (position < 0 || position >(strlen(str)-1));
     }
     return str[position];
 }
@@ -286,12 +281,14 @@ MyString operator*(int raz,const MyString &mstring)
 {
     try{
             if(raz<0)
-                throw my_logic_error();
+                throw ml;
         }
     catch(my_logic_error& e)
     {
-        cout<<e.what()<<endl<<"Please input number >0:";
-        cin>>raz;
+         do {
+           cout<<e.what()<<endl<<"Please input number >0:";
+           cin>>raz;
+        } while (raz < 0);
     }
     MyString newStr;
     newStr.str = new char[strlen(mstring.str)*raz+1];

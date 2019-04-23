@@ -8,10 +8,10 @@
 int main()
 {
     MyString str1;
-    str1="THis is a mad";
+    str1="This is str1";
     cout << str1 <<endl;
     
-    MyString str2("Hello");
+    MyString str2("This is str2");
         str2[1]='s';
     cout << str2 << endl;
 
@@ -19,7 +19,8 @@ int main()
     str3=str3;
     cout<<str2*-1<<endl;
     cout<<str2[-3]<<endl;
-    cout<<str3<<endl;
+    cout<<(str3=-1*str1*3)<<endl;
+    //cout<<str3<<endl;
 /*  cout << str3 <<endl;
     if(str3 == str2)
         cout << " str3 = etr2"<<endl;
@@ -33,8 +34,7 @@ int main()
 
 
    
-    MyString str4("World"); 
-    cout<<(str3=-1*str2*3)<<endl;
+    //MyString str4("World"); 
 /*  cout<<(str1="ldowahdo"+str4)<<endl;
     cout<<(str4+"lala")<<endl;
     cout<<(str3+str4)*4<<endl;
