@@ -3,19 +3,6 @@
 
 using namespace std;
 
-class ChessChecker{
-    public:
-        friend ostream& operator <<(ostream& os,const ChessChecker& CC)
-        {
-            if(CC.capros)
-            os<<"OK";
-            else os<<"ERROR";
-            return os;
-        }
-    public:
-        bool capros;
-};
-
 class Parser{
     public:
         friend istream& operator>>(istream& is,Parser& p)
@@ -35,6 +22,22 @@ class Figure{
     protected:
         char figures[5]={'K','Q','N','B','R'};
 };
+
+class ChessChecker{
+    public:
+        friend ostream& operator <<(ostream& os,const ChessChecker& CC)
+        {
+            if(CC.capros)
+            os<<"OK";
+            else os<<"ERROR";
+            return os;
+        }
+    private:
+        bool capros;
+	Parser par;
+	Figure *figures[5];
+};
+
 
 class figure:public Figure
 {
@@ -91,13 +94,12 @@ class figure:public Figure
 
 int main()
 {
-    Parser p;
-    figure fi;
+    
     ChessChecker CC;
     
     string s;
-    cin>>p;
-    CC.capros=fi.move(p.figure,p.start_pos,p.end_pos);
+    cin>>CC.par;
+    //CC.capros=move(p.figure,p.start_pos,p.end_pos);
     cout<<CC<<endl;
 }
 
