@@ -36,11 +36,6 @@ class Parser{
             is>>p.figure>>p.start_pos>>p.end_pos;
             return is;
         }
-	friend ostream& operator<<(ostream& os,Parser& p)
-	{
-		os<<p.figure<<p.start_pos<<p.end_pos;
-		return os;
-	}
     private:
         char *figure;
         char *start_pos;
@@ -132,11 +127,12 @@ int main()
 {
     Parser P;
     figure fi;
+    string s;
     do{
 	cin>>P;
 	ChessChecker CC(P,fi);
         cout<<CC<<endl;
-       }
-    while(strcmp(P.Get_Fi(),"exit"));
+	cin>>s;
+       }while(s!="exit");
 }
 
